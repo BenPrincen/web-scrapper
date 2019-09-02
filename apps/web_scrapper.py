@@ -5,6 +5,14 @@ import os
 import datetime
 
 # functions
+def trackedProductList():
+    csv_dir_path = os.path.join(os.getcwd(), "csv")
+    product_id_list = []
+    for csv_files in os.listdir(csv_dir_path):
+        if csv_files.endswith(".csv"):
+            product_id_list.append(os.path.splitext(csv_files)[0])
+    return product_id_list
+
 # removes quotes from any string to ensure the csv file is properly separated
 def removeQuotes(str):
     string_no_quotes = ''
