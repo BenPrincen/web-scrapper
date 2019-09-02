@@ -11,21 +11,15 @@ class Product:
 
     # create object with list of prices, and dates updated
     # used when product has been tracked before
-    def __init__(self, price_history, title, dates):
-        self.price_history = price_history
-        self.dates = dates
-        self.title = title
-        self.date = dates[len(dates) - 1]
-        self.price = price_history[len(price_history) - 1]
 
-    def getPriceHistory():
-        return price_history
+    def getPriceHistory(self):
+        return self.price_history
 
-    def getTitle():
-        return title
+    def getTitle(self):
+        return self.title
 
-    def getLastPrice():
-        return price
+    def getLastPrice(self):
+        return self.price
 
-    def getLastUpdated():
-        return date
+    def getLastUpdated(self):
+        return self.date
