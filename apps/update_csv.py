@@ -4,20 +4,23 @@ import urllib.request
 import os
 import datetime
 import sys
-from win10toast import ToastNotifier
+import plyer.platforms.win.notification
+from plyer import notification
+#from win10toast import ToastNotifier
+from libs import scraper_utils as scraper
 
-sys.path.insert(1, os.path.join(os.getcwd(), "libs"))
-import scraper_utils as scraper
-
+PROJECT_FOLDER = 'C:\\Users\\Benjamin Princen\\Workspace\\projects\\web_scrapper\\web-scrapper\\'
 # FUNCTIONS
 
 # website url format: https://www.newegg.com/p/<web product id>
+
+
 def generateProductUrl(product):
     return 'https://www.newegg.com/p/' + product
 
 
 # PSUEDOCODE
-# 
+#
 # Identify directory containing csv files
 # Loop through csv files in directory and extract the file name
 # Use the file name to access the product page
@@ -40,27 +43,26 @@ def main():
 
         script_blocks = scraper.findScripts(soup)
         title_price_id = scraper.findTitlePriceId(script_blocks, utag_data)
-        
+
         csv_path = scraper.getCSVPath(title_price_id[2])
-        
+
         mode = ''
         with open(csv_path, 'r') as f:
             if scraper.shouldUpdatePrice(f, title_price_id[1]):
-                updated_info_list.append(title_price_id[0] + ': ' + str(title_price_id[1]))
+                updated_info_list.append(
+                    title_price_id[0] + ': ' + str(title_price_id[1]))
                 mode = 'a'
             f.close()
 
         if mode != '':
             with open(csv_path, mode) as f:
-                print(title_price_id[0] + ',' + title_price_id[1] + ',' + str(datetime.date.today()), file = f)
+                print(title_price_id[0] + ',' + title_price_id[1] +
+                      ',' + str(datetime.date.today()), file=f)
                 f.close()
     toast_notif_string = ''
     for update in updated_info_list:
         toast_notif_string += update + '\n'
-    toast_notif_string += 'More info in log file'
-    toast = ToastNotifier()
-    toast.show_toast('Updated Product Prices', toast_notif_string, duration = 10)
-
+    notification.notify("Updating csvs", toast_notif_string)
 
 
 if __name__ == '__main__':
