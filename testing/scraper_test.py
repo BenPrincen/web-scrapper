@@ -3,7 +3,7 @@ import sys
 import os
 
 sys.path.insert(1, os.path.join(os.getcwd(), "apps"))
-import web_scrapper as wb
+import web_scraper as wb
 
 class TestWebScrapperMethods(unittest.TestCase):
 
