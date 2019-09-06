@@ -17,7 +17,7 @@ def shouldUpdatePrice(csv_file, extracted_price):
     for line in csv_file:
         pass
     line_info = extractInfoFromLine(line)
-    return not line[PRICE] == extracted_price
+    return not line_info[PRICE] == extracted_price
 
 
 def trackedProductList():
