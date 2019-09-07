@@ -30,6 +30,7 @@ def shouldUpdatePrice(csv_file, extracted_price):
     for line in csv_file:
         pass
     line_info = extractInfoFromLine(line)
+    print(line_info[PRICE])
     return not line_info[PRICE] == extracted_price
 
 

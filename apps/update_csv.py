@@ -44,7 +44,8 @@ def main():
         script_blocks = scraper.findScripts(soup)
         title_price_id = scraper.findTitlePriceId(script_blocks, utag_data)
 
-        csv_path = scraper.getCSVPath(title_price_id[2])
+        # scraper.getCSVPath(title_price_id[2])
+        csv_path = scraper.getCSVPath(product)
 
         mode = ''
         with open(csv_path, 'r') as f:

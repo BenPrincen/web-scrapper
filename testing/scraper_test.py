@@ -7,14 +7,13 @@ class TestWebScrapperMethods(unittest.TestCase):
 
     def testFindTrackedProducts(self):
         product_list = scraper.trackedProductList()
-        self.assertEqual(len(product_list), 1)
-        self.assertEqual(product_list[0], 'N82E16834235015')
+        self.assertEqual(len(product_list), 7)
 
     def testLastLine(self):
         product_list = scraper.trackedProductList()
         csv_file = scraper.getCSVPath(product_list[0])
         with open(csv_file, 'r') as f:
-            self.assertTrue(scraper.shouldUpdatePrice(f))
+            self.assertFalse(scraper.shouldUpdatePrice(f, 443.65))
 
     def testExtractLineInfo(self):
         line = 'S258FG,129.99,12/2/2019'
