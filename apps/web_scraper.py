@@ -20,14 +20,14 @@ ID = 2
 # Create new csv file if csv file does not already exist
 # if csv file exists then check price
 # if price is different then append new information otherwise don't do anything
-# if new information is appended then the user should be notified of the price change
+# if new information is appended then the user should be notified of the change
 #
 # MAIN
 
 
 def main():
-    # webpage = input('Please enter the url of the item you would like to track:\n')
-    webpage = 'https://www.newegg.com/gray-asus-vivobook-s-s510un-ms52-mainstream/p/N82E16834235015?Item=N82E16834235015'
+    webpage = input(
+        'Please enter the url of the item you would like to track:\n')
     source_code = urllib.request.urlopen(webpage).read()
     soup = bs.BeautifulSoup(source_code, 'lxml')
 

@@ -13,6 +13,19 @@ def extractInfoFromLine(line):
 
 
 def shouldUpdatePrice(csv_file, extracted_price):
+    """
+    checks if csv file should be updated or not
+
+    Checks if the extracted price is the same as
+    the last updated price in the csv file
+
+    Parameters:
+    csv_file (file object): Opened csv file. Will throw error if file mode is not 'r'
+    extracted_price (int): The price extracted from html source code
+
+    Returns:
+    boolean: Returns true if the csv file should be updated with new info, false if otherwise
+    """
     csv_file = csv_file.readlines()
     for line in csv_file:
         pass
@@ -21,6 +34,18 @@ def shouldUpdatePrice(csv_file, extracted_price):
 
 
 def trackedProductList():
+    """
+    Checks csv directory and returns the list of tracked product ids
+
+    Iterates through csv directory and returns a list of all of the
+    file names without the extension
+
+    Parameters:
+    None
+
+    Returns:
+    string list: List of file names without extension
+    """
     csv_dir_path = os.path.join(
         PROJECT_FOLDER, "csv")
     product_id_list = []
@@ -55,6 +80,22 @@ def findScripts(soup):
 
 
 def findScriptInfo(string_scripts, target):
+    """
+    Extracts information from javascript text.
+
+    Extracts information from javascript text based on
+    the target passed in. The method of extracting text is
+    based on the format observed in the Newegg.com html source
+    code.
+
+    Parameters:
+    string_scripts (string): javascript text
+    target (string): The javascript variable the user is looking to extract
+
+    Returns:
+    string: Returns the information contained within the target variable
+    stored in the javascript text
+    """
     scripts_begin_index = string_scripts.find(
         "'", string_scripts.find(target)) + 1
     scripts_end_index = string_scripts.find("'", scripts_begin_index + 1)
