@@ -6,10 +6,10 @@ import datetime
 import sys
 import plyer.platforms.win.notification
 from plyer import notification
-#from win10toast import ToastNotifier
 from libs import scraper_utils as scraper
 
-PROJECT_FOLDER = 'C:\\Users\\Benjamin Princen\\Workspace\\projects\\web_scrapper\\web-scrapper\\'
+PROJECT_FOLDER = '''C:\\Users\\Benjamin Princen\\Workspace\\projects
+    \\web_scrapper\\web-scrapper\\'''
 # FUNCTIONS
 
 # website url format: https://www.newegg.com/p/<web product id>
@@ -24,10 +24,12 @@ def generateProductUrl(product):
 # Identify directory containing csv files
 # Loop through csv files in directory and extract the file name
 # Use the file name to access the product page
-# Parse information from product page and update information in csv file if necessary
+# Parse information from product page and update information in csv file
 # If information is updated add it to the list of new info
 # After updates for all csv files are complete, notify the user of the updated info if there is any
 # Run this script a designated number of times per day
+
+# To be implemented:
 # Write a log file that has more detailed information on price updates
 #
 # MAIN
@@ -44,7 +46,6 @@ def main():
         script_blocks = scraper.findScripts(soup)
         title_price_id = scraper.findTitlePriceId(script_blocks, utag_data)
 
-        # scraper.getCSVPath(title_price_id[2])
         csv_path = scraper.getCSVPath(product)
 
         mode = ''

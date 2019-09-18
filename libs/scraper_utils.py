@@ -80,7 +80,13 @@ def findScripts(soup):
 # finds the information from the javascript text regarding the target variable
 
 
-def findScriptInfo(string_scripts, target):
+def findScriptInfo_am(string_line, target):
+    begin_index = string_line.find('"', string_line.find(target)) + 1
+    end_index = string_line.find('"', begin_index)
+    return string_line[begin_index: end_index]
+
+
+def findScriptInfo_ne(string_scripts, target):
     """
     Extracts information from javascript text.
 
@@ -102,17 +108,27 @@ def findScriptInfo(string_scripts, target):
     scripts_end_index = string_scripts.find("'", scripts_begin_index + 1)
     return string_scripts[scripts_begin_index: scripts_end_index]
 
-# returns a tuple containing the item price, product id, and the product model
+
+def findTitlePriceId_am(script_list, target):
+    for lines in script_list:
+        string_lines = lines.text
+        outcome = string_lines.find(target)
+        if outcome != -1:
+            price = 'placeholder'
+            product_id = 'placeholder_id'
+            product_model = 'placeholder_model'  # This might end up being the title
+
+            return (price, product_id, product_model)
 
 
-def findTitlePriceId(script_list, target):
+def findTitlePriceId_ne(script_list, target):
     for scripts in script_list:
         string_scripts = scripts.text
         outcome = string_scripts.find(target)
         if outcome != -1:
-            price = findScriptInfo(string_scripts, 'product_sale_price')
-            product_id = findScriptInfo(string_scripts, 'product_web_id')
-            product_model = findScriptInfo(string_scripts, 'product_model')
+            price = findScriptInfo_ne(string_scripts, 'product_sale_price')
+            product_id = findScriptInfo_ne(string_scripts, 'product_web_id')
+            product_model = findScriptInfo_ne(string_scripts, 'product_model')
 
             return (product_model, price, product_id)
 

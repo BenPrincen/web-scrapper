@@ -39,7 +39,7 @@ def neweggSetup(soup):
     utag_data = 'utag_data'
 
     script_blocks = scraper.findScripts(soup)
-    title_price_id = scraper.findTitlePriceId(script_blocks, utag_data)
+    title_price_id = scraper.findTitlePriceId_ne(script_blocks, utag_data)
     csv_path = scraper.getCSVPath(title_price_id[ID])
     mode = ''
     if(os.path.exists(csv_path)):
@@ -59,8 +59,7 @@ def neweggSetup(soup):
 
 
 def amazonSetup(soup):
-    # rename functions so that there are amazon functions and newegg functions
-    title_price_id = ['139', 'kjasdflk', 'moel_0']
+    title_price_id = scraper.findTitlePriceId_am()
     csv_path = scraper.getCSVPath(title_price_id[ID])
     mode = ''
     if(os.path.exists(csv_path)):
@@ -84,14 +83,22 @@ def main():
         'Please enter the url of the item you would like to track:\n')
 
     iterator = 0
+    valid_website = False
     for string in website_list:
         if webpage.lower().find(string) != -1:
             WEBSITE = iterator
+            valid_website = True
+            break
         iterator += 1
+
+    if not valid_website:
+        # print error and break from program
+        print('Website entered is not supported')
 
     source_code = urllib.request.urlopen(webpage).read()
     soup = bs.BeautifulSoup(source_code, 'lxml')
 
+    # call the respective function based on the website url
     website_func_list[WEBSITE](soup)
 
 
