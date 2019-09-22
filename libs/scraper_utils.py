@@ -109,19 +109,19 @@ def findScriptInfo_ne(string_scripts, target):
     return string_scripts[scripts_begin_index: scripts_end_index]
 
 
-def findTitlePriceId_am(script_list, target):
-    for lines in script_list:
-        string_lines = lines.text
-        outcome = string_lines.find(target)
-        if outcome != -1:
-            price = 'placeholder'
-            product_id = 'placeholder_id'
-            product_model = 'placeholder_model'  # This might end up being the title
-
-            return (price, product_id, product_model)
+def findData(soup):
+    return soup.find("div", {"id": "cerberus-data-metrics"})
 
 
-def findTitlePriceId_ne(script_list, target):
+def findTitlePriceId_am(line, title):
+    string_line = line.text
+    price = findScriptInfo_am(string_line, 'data-asin-price')
+    product_id = findScriptInfo_am(string_line, 'data-asin')
+    product_title = title
+    return (product_title, price, product_id)
+
+
+def findTitlePriceId_ne(script_list, target='utag_data'):
     for scripts in script_list:
         string_scripts = scripts.text
         outcome = string_scripts.find(target)
